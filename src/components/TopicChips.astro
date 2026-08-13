@@ -1,0 +1,62 @@
+---
+import { getCollection } from 'astro:content';
+import { getAllTags, slugifyTag } from '../utils/tags';
+
+interface Props {
+	activeTag?: string;
+}
+
+const { activeTag } = Astro.props;
+const posts = await getCollection('blog');
+const tags = getAllTags(posts);
+---
+
+<ul class="topic-chips">
+	{
+		activeTag && (
+			<li>
+				<a href="/blog" class="chip">
+					All
+				</a>
+			</li>
+		)
+	}
+	{
+		tags.map((tag) => (
+			<li>
+				<a
+					href={`/blog/tag/${slugifyTag(tag)}`}
+					class:list={['chip', { active: tag === activeTag }]}
+				>
+					{tag}
+				</a>
+			</li>
+		))
+	}
+</ul>
+
+<style>
+	.topic-chips {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5em;
+		list-style: none;
+		margin: 0 0 2em 0;
+		padding: 0;
+	}
+	.chip {
+		display: inline-block;
+		padding: 0.35em 0.9em;
+		border-radius: 999px;
+		border: 1px solid rgb(var(--gray-light));
+		color: rgb(var(--gray-dark));
+		text-decoration: none;
+		font-size: 0.9em;
+		transition: 0.2s ease;
+	}
+	.chip:hover,
+	.chip.active {
+		border-color: var(--accent);
+		color: var(--accent);
+	}
+</style>

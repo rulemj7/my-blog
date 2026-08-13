@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../../components/BaseHead.astro';
+import Footer from '../../../components/Footer.astro';
+import Header from '../../../components/Header.astro';
+import PostList from '../../../components/PostList.astro';
+import TopicChips from '../../../components/TopicChips.astro';
+import { SITE_TITLE } from '../../../consts';
+import { getAllTags, slugifyTag } from '../../../utils/tags';
+
+export async function getStaticPaths() {
+	const allPosts = await getCollection('blog');
+	const tags = getAllTags(allPosts);
+
+	return tags.map((tag) => ({
+		params: { tag: slugifyTag(tag) },
+		props: {
+			tag,
+			posts: allPosts
+				.filter((post) => post.data.tags.includes(tag))
+				.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()),
+		},
+	}));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`${tag} | ${SITE_TITLE}`} description={`Posts about ${tag}`} />
+		<style>
+			main {
+				width: 960px;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>{tag}</h1>
+			<TopicChips activeTag={tag} />
+			<PostList posts={posts} />
+		</main>
+		<Footer />
+	</body>
+</html>

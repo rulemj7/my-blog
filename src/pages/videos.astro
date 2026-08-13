@@ -1,0 +1,60 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+
+const videos = (await getCollection('videos')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Videos | ${SITE_TITLE}`} description="Reels and short videos." />
+		<style>
+			main {
+				width: 960px;
+			}
+			.video-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+				gap: 2rem;
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+			.video-grid li {
+				text-align: center;
+			}
+			.caption {
+				margin-top: 0.5em;
+				color: rgb(var(--gray));
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Videos</h1>
+			<ul class="video-grid">
+				{
+					videos.map((video) => (
+						<li>
+							<blockquote
+								class="instagram-media"
+								data-instgrm-permalink={video.data.embedUrl}
+								data-instgrm-version="14"
+							/>
+							<p class="caption">{video.data.caption}</p>
+						</li>
+					))
+				}
+			</ul>
+		</main>
+		<Footer />
+		<script async src="//www.instagram.com/embed.js"></script>
+	</body>
+</html>

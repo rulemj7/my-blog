@@ -14,7 +14,21 @@ const blog = defineCollection({
 			pubDate: z.coerce.date(),
 			updatedDate: z.coerce.date().optional(),
 			heroImage: z.optional(image()),
+			// Free-form topic tags. Add a new topic by tagging a post with it — no schema change needed.
+			tags: z.array(z.string()).default([]),
 		}),
 });
 
-export const collections = { blog };
+const videos = defineCollection({
+	// Load Markdown files in the `src/content/videos/` directory.
+	loader: glob({ base: './src/content/videos', pattern: '**/*.md' }),
+	schema: () =>
+		z.object({
+			title: z.string(),
+			caption: z.string(),
+			embedUrl: z.string().url(),
+			pubDate: z.coerce.date(),
+		}),
+});
+
+export const collections = { blog, videos };
