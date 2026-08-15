@@ -5,28 +5,30 @@
  */
 
 :root {
-	--bg: #fff;
-	--accent: #2337ff;
-	--accent-dark: #000d8a;
-	--black: 15, 18, 25;
-	--gray: 96, 115, 159;
-	--gray-light: 229, 233, 240;
-	--gray-dark: 34, 41, 57;
-	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
+	/* beingmj palette — light: Paper White canvas, teal accent */
+	--bg: #fbfaf4; /* Paper White */
+	--accent: #20808d; /* True Turquoise */
+	--accent-dark: #123b39; /* Inky Blue */
+	--black: 9, 23, 23; /* Off Black — headings */
+	--gray: 46, 94, 90; /* Peacock — muted/secondary text */
+	--gray-light: 228, 227, 212; /* Ecru — light backgrounds, borders */
+	--gray-dark: 18, 59, 57; /* Inky Blue — body text */
+	--gray-gradient: rgba(var(--gray-light), 50%), var(--bg);
 	--box-shadow:
-		0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
-		0 16px 32px rgba(var(--gray), 33%);
+		0 2px 6px rgba(18, 59, 57, 10%), 0 8px 24px rgba(18, 59, 57, 14%),
+		0 16px 32px rgba(18, 59, 57, 14%);
 }
 
 /* Light is the default everywhere; dark only applies once the toggle sets this attribute. */
 :root[data-theme='dark'] {
-	--bg: #14161c;
-	--accent: #6d82ff;
-	--accent-dark: #a9b6ff;
-	--black: 235, 238, 245;
-	--gray: 156, 168, 196;
-	--gray-light: 45, 51, 66;
-	--gray-dark: 220, 224, 233;
+	/* beingmj palette — dark: Off Black canvas, same teal accent, Plex Blue for emphasis */
+	--bg: #091717; /* Off Black */
+	--accent: #20808d; /* True Turquoise */
+	--accent-dark: #2e65ea; /* Plex Blue */
+	--black: 251, 250, 244; /* Paper White — headings */
+	--gray: 140, 145, 136; /* dimmed Ecru — muted/secondary text */
+	--gray-light: 18, 59, 57; /* Inky Blue — subtle panels, borders */
+	--gray-dark: 228, 227, 212; /* Ecru — body text */
 	--gray-gradient: rgba(var(--gray-light), 50%), var(--bg);
 	--box-shadow:
 		0 2px 6px rgba(0, 0, 0, 25%), 0 8px 24px rgba(0, 0, 0, 33%), 0 16px 32px rgba(0, 0, 0, 33%);
