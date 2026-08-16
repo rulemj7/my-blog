@@ -31,4 +31,16 @@ const videos = defineCollection({
 		}),
 });
 
-export const collections = { blog, videos };
+const about = defineCollection({
+	// Load the single Markdown file in the `src/content/about/` directory.
+	loader: glob({ base: './src/content/about', pattern: '**/*.md' }),
+	schema: ({ image }) =>
+		z.object({
+			title: z.string(),
+			description: z.string(),
+			pubDate: z.coerce.date(),
+			heroImage: z.optional(image()),
+		}),
+});
+
+export const collections = { blog, videos, about };

@@ -1,43 +1,18 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
+import { getEntry, render } from 'astro:content';
 import Layout from '../layouts/BlogPost.astro';
 import { AUTHOR_NAME } from '../consts';
+
+const aboutEntry = await getEntry('about', 'about');
+const { Content } = await render(aboutEntry);
 ---
 
 <Layout
-	title={`About ${AUTHOR_NAME}`}
-	description="The longer story — who I am, what I've done, and what I'm chasing."
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
+	title={`${AUTHOR_NAME}`}
+	description={aboutEntry.data.description}
+	pubDate={aboutEntry.data.pubDate}
+	heroImage={aboutEntry.data.heroImage}
 >
-	<h2>Who I am</h2>
-	<p>
-		[Placeholder — a fuller introduction than the home page: where you're from, where you live now,
-		and the throughline that connects husband, technophile, reader, and entrepreneur.]
-	</p>
-
-	<h2>What I've built</h2>
-	<p>
-		[Placeholder — the entrepreneurship story: companies, products, or projects you've started,
-		what you learned, what failed and what stuck.]
-	</p>
-
-	<h2>What I read and think about</h2>
-	<p>
-		[Placeholder — books and ideas that shaped you, the philosophy and spirituality threads, why
-		the Sanskrit motto on the home page matters to you.]
-	</p>
-
-	<h2>Life outside of work</h2>
-	<p>
-		[Placeholder — bike touring, travel, family life, the "husband" and "technophile" parts of the
-		intro that don't fit neatly into a work bio.]
-	</p>
-
-	<h2>Where to find more</h2>
-	<p>
-		[Placeholder — pointers to the blog, the videos page, Instagram, and the podcast for anyone who
-		wants to go deeper.]
-	</p>
+	<Content />
 </Layout>
 
